@@ -1,14 +1,8 @@
 #!/usr/bin/env bash
 
-# Vars
-# Color
-ESC_SEQ="\x1b["
-COL_RESET=$ESC_SEQ"39;49;00m"
-COL_YELLOW=$ESC_SEQ"33;01m"
-#COL_RED=$ESC_SEQ"31;01m"
 
 if grep -q -i -e "WIP" -e "work in progress" $1; then
-    read -p "$COL_YELLOW You're about to add a WIP commit, do you want to run the CI? [y|n] $COL_RESET\n" -n 1 -r < /dev/tty
+    read -p "You're about to add a WIP commit, do you want to run the CI? [y|n]" -n 1 -r < /dev/tty
     echo
     if echo $REPLY | grep -E '^[Nn]$' > /dev/null; then
         echo "[skip ci]" >> $1

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Color
+ESC_SEQ="\x1b["
+COL_RESET=$ESC_SEQ"39;49;00m"
+COL_YELLOW=$ESC_SEQ"33;01m"
+#COL_RED=$ESC_SEQ"31;01m"
+
+protected_branch='master'
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+if [ $protected_branch = $current_branch ]; then
+    read -p "$COL_YELLOW You're about to push master, is that what you intended? [y|n] $COL_RESET\n" -n 1 -r < /dev/tty
+    echo
+    if echo $REPLY | grep -E '^[Yy]$' > /dev/null; then
+        exit 0 # push will run
+    fi
+    exit 1 # push will not run
+else
+    exit 0 # push will run
+fi
+

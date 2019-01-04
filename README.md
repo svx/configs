@@ -1,2 +1,0 @@
-# configs
-Varoius Configs
